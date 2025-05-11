@@ -17,7 +17,7 @@ import java.util.Map;
 @RequestMapping("/memos")
 public class MemoController {
 
-
+    // 주입된 의존성을 변경할 수 없어 객체의 상태를 안전하게 유지할 수 있음
     private final MemoService memoService;
 
     public MemoController(MemoService memoService) {
@@ -35,6 +35,12 @@ public class MemoController {
     @GetMapping
     public List<MemoResponseDto> findAllMemos(){
         return memoService.findAllMemos();
+    }
+
+    // 메모 단건 조회
+    @GetMapping
+    public ResponseEntity<MemoResponseDto> findMemoById(@PathVariable Long id){
+        return new ResponseEntity<>(memoService.findMemoById(id),HttpStatus.OK);
     }
 
 }
