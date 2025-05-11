@@ -1,11 +1,10 @@
 package com.example.layered.repository;
 
+import com.example.layered.dto.MemoResponseDto;
 import com.example.layered.entity.Memo;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class MemoRepositoryImpl implements MemoRepository{
@@ -20,5 +19,20 @@ public class MemoRepositoryImpl implements MemoRepository{
         memoList.put(memoId, memo);
 
         return memo;
+    }
+
+    @Override
+    public List<MemoResponseDto> findAllMemos() {
+
+        // init List
+        List<MemoResponseDto> allMemos = new ArrayList<>();
+
+        // HashMap<Memo> -> List<MemoResponseDto>
+        for (Memo memo : memoList.values()){
+            MemoResponseDto responseDto = new MemoResponseDto(memo);
+            allMemos.add(responseDto);
+        }
+
+        return allMemos;
     }
 }
