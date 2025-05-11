@@ -38,7 +38,7 @@ public class MemoController {
     }
 
     // 메모 단건 조회
-    @GetMapping
+    @GetMapping("/{id}")
     public ResponseEntity<MemoResponseDto> findMemoById(@PathVariable Long id){
         return new ResponseEntity<>(memoService.findMemoById(id),HttpStatus.OK);
     }
