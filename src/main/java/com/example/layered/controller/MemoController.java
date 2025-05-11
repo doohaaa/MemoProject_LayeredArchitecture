@@ -53,7 +53,7 @@ public class MemoController {
     }
 
     // 메모 제목 수정
-    @PostMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<MemoResponseDto> updateTitle(
             @PathVariable Long id,
             @RequestBody MemoRequestDto requestDto
