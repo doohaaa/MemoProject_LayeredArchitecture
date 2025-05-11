@@ -45,7 +45,7 @@ public class MemoServiceImpl implements MemoService{
 
         // NPE 방지
         if (memo == null){
-            throw new ResponseStatusException((HttpStatus.NOT_FOUND, "Does not exist id = "+id);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
         }
         return new MemoResponseDto(memo);
     }
