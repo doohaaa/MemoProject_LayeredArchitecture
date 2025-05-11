@@ -25,7 +25,7 @@ public class MemoController {
     }
 
     @PostMapping
-    public ResponseEntity<MemoResponseDto> createMemo(@RequestBody MemoRequestDto dto){
+    public ResponseEntity<MemoResponseDto> createMemo(@RequestBody MemoRequestDto dto) {
 
         // Service Layer 호출, 응답
         return new ResponseEntity<>(memoService.saveMemo(dto), HttpStatus.CREATED);
@@ -33,14 +33,23 @@ public class MemoController {
 
     // 전체 조회
     @GetMapping
-    public List<MemoResponseDto> findAllMemos(){
+    public List<MemoResponseDto> findAllMemos() {
         return memoService.findAllMemos();
     }
 
     // 메모 단건 조회
     @GetMapping("/{id}")
-    public ResponseEntity<MemoResponseDto> findMemoById(@PathVariable Long id){
-        return new ResponseEntity<>(memoService.findMemoById(id),HttpStatus.OK);
+    public ResponseEntity<MemoResponseDto> findMemoById(@PathVariable Long id) {
+        return new ResponseEntity<>(memoService.findMemoById(id), HttpStatus.OK);
+    }
+
+    // 메모 전체 수정
+    @PutMapping("/{id}")
+    public ResponseEntity<MemoResponseDto> updateMemo(
+            @PathVariable Long id,
+            @RequestBody MemoRequestDto requestDto
+    ) {
+        return new ResponseEntity<>(memoService.updateMemo(id, requestDto.getTitle(), requestDto.getContents()), HttpStatus.OK);
     }
 
 }

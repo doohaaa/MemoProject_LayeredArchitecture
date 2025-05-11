@@ -11,7 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @Service
-public class MemoServiceImpl implements MemoService{
+public class MemoServiceImpl implements MemoService {
 
     private final MemoRepository memoRepository;
 
@@ -44,9 +44,26 @@ public class MemoServiceImpl implements MemoService{
         Memo memo = memoRepository.findMemoById(id);
 
         // NPE 방지
-        if (memo == null){
+        if (memo == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
         }
+        return new MemoResponseDto(memo);
+    }
+
+    @Override
+    public MemoResponseDto updateMemo(Long id, String title, String contents) {
+        // memo 조회
+        Memo memo = memoRepository.findMemoById(id);
+        // NPE 방지
+        if (memo == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
+        }
+        // 필수값 검증
+        if (title == null || contents == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The title and content are requred values.");
+        }
+        // memo 수정
+        memo.update(title,contents);
         return new MemoResponseDto(memo);
     }
 }
