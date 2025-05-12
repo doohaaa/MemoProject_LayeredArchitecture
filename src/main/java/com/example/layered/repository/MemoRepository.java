@@ -20,5 +20,5 @@ public interface MemoRepository {
 
     int deleteMemo(Long id);
 
-
+    Memo findMemoByIdOrElseThrow(Long id);
 }

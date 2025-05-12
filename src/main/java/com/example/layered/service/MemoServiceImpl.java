@@ -41,13 +41,8 @@ public class MemoServiceImpl implements MemoService {
     @Override
     public MemoResponseDto findMemoById(Long id) {
 
-        Optional<Memo> optionalMemo = memoRepository.findMemoById(id);
-
-        // NPE 방지
-        if (optionalMemo == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
-        }
-        return new MemoResponseDto(optionalMemo.get());
+        Memo memo = memoRepository.findMemoByIdOrElseThrow(id);
+        return new MemoResponseDto(memo);
     }
 
     @Transactional
@@ -102,4 +97,5 @@ public class MemoServiceImpl implements MemoService {
         }
 
     }
+
 }

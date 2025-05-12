@@ -2,13 +2,16 @@ package com.example.layered.repository;
 
 import com.example.layered.dto.MemoResponseDto;
 import com.example.layered.entity.Memo;
+import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.sql.DataSource;
+import java.nio.file.ReadOnlyFileSystemException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -97,5 +100,12 @@ public class JdbcTemplateMemoRepository implements MemoRepository {
     public int deleteMemo(Long id) {
         // 쿼리에 영향을 받은 row수를 int로 반환한다.
         return jdbcTemplate.update("delete from memo where id = ?",id);
+    }
+
+    @Override
+    public Memo findMemoByIdOrElseThrow(Long id) {
+        List<Memo> result = jdbcTemplate.query("select * from memo where id =?", memoRowMapperV2(), id);
+
+        return result.stream().findAny().orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exsit id = "+id));
     }
 }
