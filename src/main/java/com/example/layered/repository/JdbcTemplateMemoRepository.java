@@ -65,6 +65,8 @@ public class JdbcTemplateMemoRepository implements MemoRepository {
         return result.stream().findAny();
     }
 
+
+
     private RowMapper<Memo> memoRowMapperV2(){
         return new RowMapper<Memo>() {
 
@@ -79,6 +81,11 @@ public class JdbcTemplateMemoRepository implements MemoRepository {
         };
     }
 
+
+    @Override
+    public int updateMemo(Long id, String title, String contents) {
+        return jdbcTemplate.update("update memo set title = ?, contents=? where id=?", title, contents, id);
+    }
 
 
     @Override
