@@ -58,7 +58,7 @@ public class MemoServiceImpl implements MemoService {
         }
         // 필수값 검증
         if (title == null || contents == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The title and content are requred values.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The title and content are required values.");
         }
         // memo 수정
         memo.update(title,contents);
